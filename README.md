@@ -1,2 +1,2 @@
-# Some Package
-Some package description
+# PropertyWrappers
+Property wrappers and bindings for Unity + C#.
