@@ -67,6 +67,10 @@ namespace Foundation {
             SetDidSetCallback(didSet);
         }
 
+        /// <summary>
+        /// Reassign the `willSet` function of this wrapper.  Set to <see langword="null"/> to stop observing.
+        /// </summary>
+        /// <param name="callback">The function to call when the property is about to be set.</param>
         public void SetWillSetCallback(IChangeObserver<Value>.ImmutableWillSetCallback callback) {
             if (callback != null) {
                 this._willSetFunction = (Value oldValue, ref Value newValue) => {
@@ -77,10 +81,19 @@ namespace Foundation {
             }
         }
 
+        /// <summary>
+        /// Reassign the `willSet` function of this wrapper.  Set to <see langword="null"/> to stop observing.
+        /// </summary>
+        /// <param name="callback">The function to call when the property is about to be set.</param>
         public void SetWillSetCallback(IChangeObserver<Value>.WillSetCallback callback) {
             _willSetFunction = callback;
         }
 
+
+        /// <summary>
+        /// Reassign the `didSet` function of this wrapper.  Set to <see langword="null"/> to stop observing.
+        /// </summary>
+        /// <param name="callback">The function to call immediately after the property was set.</param>
         public void SetDidSetCallback(IChangeObserver<Value>.DidSetCallback callback) {
             _didSetFunction = callback;
         }
