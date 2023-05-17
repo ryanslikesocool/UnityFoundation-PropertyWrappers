@@ -16,13 +16,21 @@ namespace Foundation {
                 }
                 return _value;
             }
-            set => _value = value;
+            set {
+                _value = value;
+                if (_value != null) {
+                    _isInitialized = true;
+                }
+            }
         }
 
         /// <summary>
         /// Has the underlying value been initialized?
         /// </summary>
-        public bool isInitialized => isInitialized;
+        /// <remarks>
+        /// If the <see cref="wrappedValue"/> has been set to <see langword="null"/> after initialization, <see cref="isInitialized"/> is reset to <see langword="false"/>.
+        /// </remarks>
+        public bool isInitialized => _isInitialized;
 
         private readonly Initializer initializer;
 

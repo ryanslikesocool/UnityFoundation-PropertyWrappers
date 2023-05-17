@@ -12,7 +12,7 @@ namespace Foundation {
 
         public Value wrappedValue {
             get {
-                if (!HasValue) {
+                if (!hasValue) {
                     throw new System.InvalidOperationException("Serializable nullable object must have a value.");
                 }
                 return _value;
@@ -26,7 +26,7 @@ namespace Foundation {
         /// <summary>
         /// Does the wrapper's underlying value exist?
         /// </summary>
-        public bool HasValue => _hasValue;
+        public bool hasValue => _hasValue;
 
         public Optional(bool hasValue, Value value) {
             this._value = value;
@@ -45,12 +45,12 @@ namespace Foundation {
         /// <returns><see langword="true"/> if the underlying value exists; <see langword="false"/> otherwise.</returns>
         public bool TryGetValue(out Value value) {
             value = this._value;
-            return HasValue;
+            return hasValue;
         }
 
-        public Value? System {
+        public Value? system {
             get {
-                if (!HasValue) {
+                if (!hasValue) {
                     return null;
                 } else {
                     return _value;
@@ -65,7 +65,7 @@ namespace Foundation {
             => value.HasValue ? new Optional<Value>(value.Value) : new Optional<Value>();
 
         public static implicit operator System.Nullable<Value>(Optional<Value> value)
-            => value.HasValue ? (Value?)value.wrappedValue : null;
+            => value.hasValue ? (Value?)value.wrappedValue : null;
 
         public override int GetHashCode() => (_hasValue, _value).GetHashCode();
 
@@ -91,7 +91,7 @@ namespace Foundation {
         }
 
         public bool Equals(Value other) {
-            if (!HasValue) { return false; }
+            if (!hasValue) { return false; }
             return _value.GetHashCode() == other.GetHashCode();
         }
     }

@@ -15,6 +15,14 @@ namespace Foundation {
         }
 
         /// <summary>
+        /// Returns <see langword="true"/> if this binding is valid and can be used; <see langword="false"/> otherwise.
+        /// </summary>
+        /// <remarks>
+        /// Both the get and set bindings must exist for this binding to be considered valid.
+        /// </remarks>
+        public bool isValid => get is not null && set is not null;
+
+        /// <summary>
         /// Creates a binding with closures that read and write the binding value.
         /// </summary>
         /// <param name="get">A closure that retrieves the binding value. The closure has no parameters, and returns a value.</param>

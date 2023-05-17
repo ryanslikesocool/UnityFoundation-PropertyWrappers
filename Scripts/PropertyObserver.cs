@@ -6,7 +6,7 @@ namespace Foundation {
     /// A property wrapper type that can read and write a value, as well as observe changes to the underlying value.
     /// </summary>
     /// <remarks>
-    /// PropertyObserver should be used as the single source of truth for a given value.
+    /// <c>PropertyObserver</c> should be used as the single source of truth for a given value.
     /// </remarks>
     [Serializable]
     public sealed class PropertyObserver<Value> : IChangeObserver<Value> where Value : struct {
@@ -37,7 +37,7 @@ namespace Foundation {
         }
 
         /// <summary>
-        /// Create a new property observer with no `willSet` function.
+        /// Create a new property observer with no <c>willSet</c> function.
         /// </summary>
         /// <param name="initialValue">The initial property value.</param>
         /// <param name="didSet">The function to call immediately after the property was set.</param>
@@ -46,7 +46,7 @@ namespace Foundation {
         }
 
         /// <summary>
-        /// Create a new property observer with a mutable `willSet` function.
+        /// Create a new property observer with a mutable <c>willSet</c> function.
         /// </summary>
         /// <param name="initialValue">The initial property value.</param>
         /// <param name="willSet">The function to call when the property is about to be set.</param>
@@ -57,7 +57,7 @@ namespace Foundation {
         }
 
         /// <summary>
-        /// Create a new property observer with an immutable `willSet` function.
+        /// Create a new property observer with an immutable <c>willSet</c> function.
         /// </summary>
         /// <param name="initialValue">The initial property value.</param>
         /// <param name="willSet">The function to call when the property is about to be set.</param>
@@ -68,7 +68,7 @@ namespace Foundation {
         }
 
         /// <summary>
-        /// Reassign the `willSet` function of this wrapper.  Set to <see langword="null"/> to stop observing.
+        /// Reassign the <c>willSet</c> function of this wrapper.  Set to <see langword="null"/> to stop observing.
         /// </summary>
         /// <param name="callback">The function to call when the property is about to be set.</param>
         public void SetWillSetCallback(IChangeObserver<Value>.ImmutableWillSetCallback callback) {
@@ -82,7 +82,7 @@ namespace Foundation {
         }
 
         /// <summary>
-        /// Reassign the `willSet` function of this wrapper.  Set to <see langword="null"/> to stop observing.
+        /// Reassign the <c>willSet</c> function of this wrapper.  Set to <see langword="null"/> to stop observing.
         /// </summary>
         /// <param name="callback">The function to call when the property is about to be set.</param>
         public void SetWillSetCallback(IChangeObserver<Value>.WillSetCallback callback) {
@@ -91,7 +91,7 @@ namespace Foundation {
 
 
         /// <summary>
-        /// Reassign the `didSet` function of this wrapper.  Set to <see langword="null"/> to stop observing.
+        /// Reassign the <c>didSet</c> function of this wrapper.  Set to <see langword="null"/> to stop observing.
         /// </summary>
         /// <param name="callback">The function to call immediately after the property was set.</param>
         public void SetDidSetCallback(IChangeObserver<Value>.DidSetCallback callback) {

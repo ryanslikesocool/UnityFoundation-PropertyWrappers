@@ -7,7 +7,16 @@ namespace Foundation {
 
         private readonly Get get;
 
+        /// <summary>
+        /// Read the binding value.
+        /// </summary>
+        /// <returns>The binding value.</returns>
         public Value wrappedValue => get();
+
+        /// <summary>
+        /// Returns <see langword="true"/> if this binding is valid and can be used; <see langword="false"/> otherwise.
+        /// </summary>
+        public bool isValid => get is not null;
 
         /// <summary>
         /// Creates a binding from an existing property wrapper.
