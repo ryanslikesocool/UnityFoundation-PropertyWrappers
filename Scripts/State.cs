@@ -17,6 +17,8 @@ namespace Foundation {
             set => _value = value;
         }
 
+        public Binding<Value> projectedValue => new Binding<Value>(propertyWrapper: this);
+
         /// <summary>
         /// Creates the state with an initial value.
         /// </summary>

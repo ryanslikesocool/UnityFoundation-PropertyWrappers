@@ -11,7 +11,15 @@ namespace Foundation {
         /// Read the binding value.
         /// </summary>
         /// <returns>The binding value.</returns>
-        public Value wrappedValue => get();
+        public Value wrappedValue {
+            get {
+                if (isValid) {
+                    return get();
+                } else {
+                    return default;
+                }
+            }
+        }
 
         /// <summary>
         /// Returns <see langword="true"/> if this binding is valid and can be used; <see langword="false"/> otherwise.
