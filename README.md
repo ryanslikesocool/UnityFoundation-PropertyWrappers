@@ -2,4 +2,4 @@
 Property wrappers and bindings for Unity + C#.
 
 ## Notice
-PropertyWrappers depends on [Foundation](https://github.com/ryanslikesocool/UnityFoundation).
+Property Wrappers depends on [Foundation](https://github.com/ryanslikesocool/UnityFoundation).
