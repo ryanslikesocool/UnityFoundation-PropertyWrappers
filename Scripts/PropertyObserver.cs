@@ -9,7 +9,7 @@ namespace Foundation {
     /// <c>PropertyObserver</c> should be used as the single source of truth for a given value.
     /// </remarks>
     [Serializable]
-    public sealed class PropertyObserver<Value> : IChangeObserver<Value> where Value : struct {
+    public struct PropertyObserver<Value> : IChangeObserver<Value> where Value : struct {
         [SerializeField, Tooltip("The underlying property value.  Changes made to this value will not invoke callbacks.")] private Value _value;
 
         public Value wrappedValue {
@@ -22,8 +22,8 @@ namespace Foundation {
             }
         }
 
-        private IChangeObserver<Value>.DidSetCallback _didSetFunction = default;
-        private IChangeObserver<Value>.WillSetCallback _willSetFunction = default;
+        private IChangeObserver<Value>.DidSetCallback _didSetFunction;
+        private IChangeObserver<Value>.WillSetCallback _willSetFunction;
 
         public bool HasWillSetFunction => _willSetFunction != null;
         public bool HasDidSetFunction => _didSetFunction != null;
@@ -34,6 +34,8 @@ namespace Foundation {
         /// <param name="initialValue">The initial property value.</param>
         public PropertyObserver(in Value initialValue) {
             this._value = initialValue;
+            _didSetFunction = default;
+            _willSetFunction = default;
         }
 
         /// <summary>
