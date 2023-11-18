@@ -5,14 +5,14 @@
   "unity": "2021.3",
   "description": "Property wrappers and bindings for Unity + C#.",
   "documentationUrl": "https://github.com/ryanslikesocool/UnityFoundation-PropertyWrappers",
+	"licenseUrl": "https://github.com/ryanslikesocool/UnityFoundation-PropertyWrappers/blob/main/LICENSE.md",
   "author": {
     "name": "Ryan Boyer",
     "email": "ryanjboyer@gmail.com",
     "url": "http://ryanjboyer.com/"
   },
-  "license": "MIT",
   "type": "library",
   "dependencies": {
-    "com.developedwithlove.foundation": ""
+    "com.developedwithlove.foundation": "0.1.0-pre.1"
   }
 }
