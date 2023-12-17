@@ -8,31 +8,24 @@ namespace Foundation.Editors {
 			SerializedProperty hasValueProperty = property.FindPropertyRelative("_hasValue");
 			SerializedProperty valueProperty = property.FindPropertyRelative("_value");
 
-			EditorGUI.BeginProperty(position, label, property);
+			using (new EditorGUI.PropertyScope(position, label, property)) {
+				// Draw label
+				position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
 
-			// Draw label
-			position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
+				using (new EditorGUI.IndentLevelScope(-EditorGUI.indentLevel)) {
+					// Calculate rects
+					Rect toggleRect = new Rect(position.x, position.y, 15, position.height);
+					float consumed = toggleRect.width + 5;
+					Rect valueRect = new Rect(position.x + consumed, position.y, position.width - consumed, position.height);
 
-			// Clear indent
-			int indent = EditorGUI.indentLevel;
-			EditorGUI.indentLevel = 0;
+					// Draw fields - pass GUIContent.none to each so they are drawn without labels
+					EditorGUI.PropertyField(toggleRect, hasValueProperty, GUIContent.none);
 
-			// Calculate rects
-			Rect toggleRect = new Rect(position.x, position.y, 15, position.height);
-			float consumed = toggleRect.width + 5;
-			Rect valueRect = new Rect(position.x + consumed, position.y, position.width - consumed, position.height);
-
-			// Draw fields - pass GUIContent.none to each so they are drawn without labels
-			EditorGUI.PropertyField(toggleRect, hasValueProperty, GUIContent.none);
-
-			EditorGUI.BeginDisabledGroup(hasValueProperty.boolValue);
-			EditorGUI.PropertyField(valueRect, valueProperty, GUIContent.none);
-			EditorGUI.EndDisabledGroup();
-
-			// Restore indent
-			EditorGUI.indentLevel = indent;
-
-			EditorGUI.EndProperty();
+					using (new EditorGUI.DisabledScope(hasValueProperty.boolValue == false)) {
+						EditorGUI.PropertyField(valueRect, valueProperty, GUIContent.none);
+					}
+				}
+			}
 		}
 	}
 }
