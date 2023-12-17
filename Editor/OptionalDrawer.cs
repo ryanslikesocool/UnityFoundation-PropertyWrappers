@@ -8,8 +8,9 @@ namespace Foundation.Editors {
 			SerializedProperty hasValueProperty = property.FindPropertyRelative("_hasValue");
 			SerializedProperty valueProperty = property.FindPropertyRelative("_value");
 
-			using (new EditorGUI.PropertyScope(position, label, property)) {
+			using (var scope = new EditorGUI.PropertyScope(position, label, property)) {
 				// Draw label
+				label = scope.content;
 				position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
 
 				using (new EditorGUI.IndentLevelScope(-EditorGUI.indentLevel)) {
