@@ -6,14 +6,14 @@ namespace Foundation {
 	/// A type that represents either a wrapped value or the absence of a value.
 	/// </summary>
 	[Serializable]
-	public struct Optional<Value> : IMutablePropertyWrapper<Value>, IEquatable<Optional<Value>>, IEquatable<Value> where Value : struct {
+	public sealed class OptionalReference<Value> : IMutablePropertyWrapper<Value>, IEquatable<OptionalReference<Value>>, IEquatable<Value> where Value : class {
 		[SerializeField] private Value _value;
 		[SerializeField] private bool _hasValue;
 
 		public Value wrappedValue {
-			readonly get {
+			get {
 				if (!hasValue) {
-					throw new System.InvalidOperationException("Serializable nullable object must have a value.");
+					throw new InvalidOperationException("Serializable nullable object must have a value.");
 				}
 				return _value;
 			}
@@ -26,25 +26,20 @@ namespace Foundation {
 		/// <summary>
 		/// Does the wrapper's underlying value exist?
 		/// </summary>
-		public readonly bool hasValue => _hasValue;
+		public bool hasValue => _hasValue;
 
-		public Optional(bool hasValue, Value value) {
+		public OptionalReference(bool hasValue, Value value) {
 			this._value = value;
 			this._hasValue = hasValue;
 		}
 
-		public Optional(Value? value) {
-			this._hasValue = value.HasValue;
-			if (value.HasValue) {
-				this._value = value.Value;
+		public OptionalReference(Value value) {
+			this._hasValue = value != null;
+			if (value != null) {
+				this._value = value;
 			} else {
 				this._value = default;
 			}
-		}
-
-		public Optional(Value value) {
-			this._value = value;
-			this._hasValue = true;
 		}
 
 		/// <summary>
@@ -52,40 +47,27 @@ namespace Foundation {
 		/// </summary>
 		/// <param name="value">The underlying value, if it exists; <see langword="default"/> otherwise.</param>
 		/// <returns><see langword="true"/> if the underlying value exists; <see langword="false"/> otherwise.</returns>
-		public readonly bool TryGetValue(out Value value) {
+		public bool TryGetValue(out Value value) {
 			value = this._value;
 			return hasValue;
 		}
 
-		public readonly Value? system {
-			get {
-				if (!hasValue) {
-					return null;
-				} else {
-					return _value;
-				}
-			}
-		}
+		public static implicit operator OptionalReference<Value>(Value value)
+			=> new OptionalReference<Value>(value);
 
-		public static implicit operator Optional<Value>(Value value)
-			=> new Optional<Value>(value);
-
-		public static implicit operator Optional<Value>(Value? value)
-			=> new Optional<Value>(value);
-
-		public static implicit operator Value?(Optional<Value> value)
+		public static implicit operator Value(OptionalReference<Value> value)
 			=> value.hasValue ? value.wrappedValue : null;
 
-		public readonly override int GetHashCode() => (_hasValue, _value).GetHashCode();
+		public override int GetHashCode() => (_hasValue, _value).GetHashCode();
 
-		public readonly override bool Equals(object obj) => obj switch {
-			Optional<Value> other => this.Equals(other),
+		public override bool Equals(object obj) => obj switch {
+			OptionalReference<Value> other => this.Equals(other),
 			Value other => this.Equals(other),
 			null => !_hasValue,
 			_ => false,
 		};
 
-		public readonly bool Equals(Optional<Value> other) {
+		public bool Equals(OptionalReference<Value> other) {
 			if (_hasValue == other._hasValue) {
 				return !_hasValue || _value.GetHashCode() == other._value.GetHashCode();
 			} else {
@@ -93,7 +75,7 @@ namespace Foundation {
 			}
 		}
 
-		public readonly bool Equals(Value other) {
+		public bool Equals(Value other) {
 			if (!hasValue) {
 				return false;
 			}
